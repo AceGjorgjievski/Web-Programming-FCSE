@@ -1,0 +1,170 @@
+WEB slojot kje precheka odredeno baranje (od soodveten kontroler), potoa kje go prosledi do SERVICE sloj (biznis logika), 
+koj shto kje go prosledi do REPOSITORY slojot i repository slojot soodvetno kje ovozmozhi da se povlechat podatoci za (studentite) od DB,
+koja shto taa DB e izgradena vrz MODEL sloj. Ponatamu kje se propagiraat nazad site tie podatoci i soodvetno WEB slojot kje treba
+da kreira (dinamichki) da se vnesat tie podatoci vo nekoe view koe shto se vrakja na klientot.
+
+REPOSITORY => kje bidat nekoi so pomoshni metodi koi shto kje mozheme nekako da izvlecheme data od DB, a pritoa da go 
+		koristime modelot koj shto ni dava soodvetni informacii za toa kako izgleda nashiot domen implementiran
+		vo samata DB
+
+Optional<Class> =>  obezbeduva da nie ne vrakjame null object tuku vrakjame Optional object koj vnatre mozhe da bide prazen
+
+Ctrl+Shift+F9
+
+init() => se povikuva koga statuvame spring, od koga kje se instacira category servletot
+
+================================================================================================
+
+https://www.youtube.com/watch?v=rZeg6XxkijY === @ 33:55
+@Component -> za da povikame neshto po startuvanjeto na aplikacijata
+	@PostConstruct -> za da se startuva method vednash po startuvanjeto na aplikacijata t.e.
+			posle konstruiranjeto na kontekstot treba da se povika ovoj method
+================================================================================================
+@Controller -> koga imame kontroler, baranjeto koe go vrakja e nekakvo view t.e.
+		go modificira modelot i vrakja nekakvo view
+@RestController -> gi koristime za kreiranje na restfull API kade shto nema da vrati vakvo view 
+		na korisnikot tuky kje vrati nekakvi podatoci. Pr. na GET request kje vrati
+		list na products i ja vrakja taa lista vo xml ili json format. Ponatamu taa
+		kje se koristi taka shto kje treba da imame nekoja klientska aplikacija
+		(react, angular) koja shto kje pravi povici do toa API i na response od API-to
+		kje go menadzira i kje prikazhe na korisnikot ona shto treba
+*bidejkji koristime templates za da vratime view na klient(.html) kje go korisitime @Controller-ot
+
+Model -> site podatoci koi kje ni bidat potrebni vo view-to da ja stavime vo ramki na modelot
+	i ponatamu vo ramki na nekoj html da gi pristapime tie podatoci
+
+[[${modelVariable}]]
+
+CSS, JS, PHOTOS
+https://stackoverflow.com/questions/27170772/where-to-put-static-files-such-as-css-in-a-spring-boot-project
+
+
+@PathVariable => https://localhost:9090/home/67 => '67' is path variable
+@RequestParam => https://localhost:9090/home?id=67 => 'id=67' is query parameter
+
+@Transactional @34:00
+==============================================================================================================
+DB
+
+JDBConnectivity - osnoven nachin na komunikacija pomegju Java i DB (kncept koj shto e smislen od pochetocite na java);
+	idejata e da se deklarira bazichen interfejs koj shto ednostavno kje ovozmozhi kontakt na aplikacijta nasha
+	so DB (kontakt na ednostavno nivo)
+ORM - podobruvanje na JDBC za da mozhe da se koristi so objekti 
+    -----and Hibernate - Java based ORM tools that provides a framework for mapping application
+		domain objects to the ralational database tables and vice versa.
+JPA - ovozmozhuva podobruvanje na ORM za da bide polesno za programiranje
+	- The java persistance API
+	- The query language [enables access to the DB]
+	- Object relational mapping
+Spring Data JPA - sistem na dopolnitelno priblizhuvanje na mozhnostite za zapishuvanje na 
+		podatoci so vlez na deklarativno programiranje koga ona shto go pishuvame
+		iminja na funkcii, promenlivi itn.,  direktno se transformira vo soodvetni podatochni objekti
+		vo DB (poednostaven proces na koj shto ednostavno i lesno da pristapuvame do DB)
+
+Koga se pravi mapiranje od java klasi vo db tabeli prichinata za potreba od PRAZEN KONSTRUKTOR
+e toa shto da gi setira soodvetnite vrednosti i da napravi prazen entitet
+
+value attribute in option tag within select tag => vrednosta koja kje se predade koga kje se klikne
+					kje bide ona shto kje bide vmetnato vo value tag-ot
+
+
+
+*spring.jpa.hibernate.ddl-auto=[none, update, create, create-drop, validate]
+[none] - koga kje se povrzhesh so serverot ne proveruvaj nishto, ne kriraj nishto, ne pravi nishto (rizichna opcija)
+	- koga kje sakame da izvrshime nekoe query mozhe da dobieme iskluchok koi shto ne bi go doznale
+	napochetok pri statuvanjeto na samiot server
+[update] - ne brishe nishto, samo ja updateira shemata (se' shto kje napravime vo nashiot model kje go preslika i kje kreira 
+	soodvetni elementi vo samata db) (inkrementalno kako se raboti, od levo kon desno kje se prefrlaat rabotite)
+[create] - samo ja kreira shemata i gi unishtuva prethodnite podatoci
+[create-drop] - opcija za testiranje; pri startuvanje na serverot se kreiraat site raboti shto nie gi imame anotirano, a
+		pri zapiranje na serverot pak kje se izbrishat t.e. sekoe naredno startuvanje prvo brishe, pa potoa
+		kreira (ja chisti shemata i odnovo ja kreira shemata kako shto postoi)
+[validate] - vo produkcija se preporachuva da se koristi zatoa shto da kazheme ne e preporachlivo da nekoi sluchajni promeni 
+	koi kje gi napravime vo objektite direktno se primenat na bazata na podatoci tuku sakame da validirame deka 
+	objektite koi shto gi imame bukvalno odgovaat na sostojbata na db i site promeni na db (strukturata na db) kje 
+	gi napravime rachno
+
+@GeneratedValue(strategy=GenerationType.[AUTO, IDENTITY, SEQUENCE, TABLE])
+[AUTO] - sequence table do kade sme stginale za sekoja od tabelite so identifikatorite
+[IDENTITY] - od db koristime autoincrement dokolku e poddrzhano
+[SEQUENCE] - do kade sme stinagle so sekvencata na kluchevi
+[TABLE] - posebna tabela za sekoja od sekvencite( e.g. Category sequence, Manufacturer sequence etc.)
+
+@Enumerated -> se stava na atribut shto e enumeracija i pritoa @Enumarated(EnumType.[ORDINAL,STRING])
+[ORDINAL] - (0, 1, 2,...) reden broj
+[STRING] - strings values 
+
+
+@35:30
+@One/ManyToOne -> fetch=FetchType.EAGER (vednash se vchituvaat podatocite pri vchituvanjeto na samite podatoci)
+@One/ManyToMany -> fetch=FetchType.LAZY
+
+- eager znaci deka gi vcituva vednas, lazy znaci deka ke ceka da povikas nekoj metod sto ke gi zeme tie entiteti
+samo kaj X to many relacii ima vakvo nesto
+- lazy e default, eager se stava ako ima X to many anotacija
+- manytoone pod default e eager, a manytomany pod default e lazy
+to site toOne se pod defualt eager, a tomany pod default lazy
+
+@31:30 za dopol. objasnuvanje
+
+JpaRepository<Entity, EntityID> - interface koj shto ovozhmozhuva mnoshtvo na metodi za rabota so db t.e.
+				ona shto spring data go nudi se klasi kako JpaRepository, CrudRepository i sl.
+				koi shto pretstavuvaat nekoj interface kon takvoto menadziranje na podatocite
+
+koga pravime promena na sostojbata na serverot, vo konkreten sluchaj sostojbata e bazata, togash koristime @PostMapping
+https://www.youtube.com/watch?v=rZeg6XxkijY
+@41:55
+======================================================================================================
+Security
+
+Informacijata za toa koj korisnik e najaven mozheme da ja zememe kako pole/kluch remote user vo samiot request
+[${#request.getRemoteUser()}]
+
+@EnableGlobalMethod	ovozmozhuvame globalna bezbednost na metodite, kade shto preku metodi mozheme da kazhuvame koi
+			ulogi imaat pristap do nekoe url 
+
+integracija - koga spring security kje se obide da avtenticira korisnik tie informacii za username, password, role ... na korisnikot da 
+		izvekuva od baza so toa shto kje imame persistenten sistem za chuvanje na site korisnici koi shto ni se potrebni.
+		Ako nashata aplikacija treba da podrzhuva registracija na korisnici istata da mozhe da ja implementirame.
+
+======================================================================================================
+
+Testing: (sushtina na testiranjeto e da go olesnime oddrzhuvanjeto na samiot sistem t.e
+	koga sistemot kje go pushtime vo produkcija togash toj puchnuva da 'zhivee' i togash
+	korisnicite kje pochnat da gi sogleduvaat negovite prednosti i slabosti, mozhnosti za nadgradba i
+	togash pochuvaat golem del od baranjata. Megjutoa ovie baranja obichno se raspredeluvaat vo nekoj
+	podolg period akde shto nie (programeri) sme raspredelni na drugi proekti i vo ovoj proces, koga kje ne
+	vratat na nekoj start proekt ne mozheme da se setime se' ona shto bilo potrebno i site biznis baranja koi shto
+	bile navedeni vo toj proekt. Tokmu zatoa, testovite se tuka za da garantiraat deka nema da rasipeme neshto
+	shto prethodno rabotelo t.e. nema da vovedeme t.n. regression bugs, funkcionalnosti koi shto prethodno
+	rabotele, a sega so noviot update nie sme gi rasipale. Ova e sushtinata zoshto se potrebni testovi)
+JUnit - bussines functionallity
+Integration - ja testiraat celosnata funkcionalnost na sistemot vkluchuvajkji gi i kompomentite za pristap do DB. 
+	Vo ovie testovi kje go testirame samiot Spring MVC (presentation logic) i ovie testovi nema da koristat
+	'mock' implementacija t.e. simulirana implementacija nitu na service, nitu na repo, tuku kje gi koristat
+	vistinskite implementacii. Ona koeshto e teshko da go izvedeme vo vakvoto integracisko testiranje e toa
+	deka ne e pametno da go izvedeme na prdokciska DB da dodademe novi funkcionalnosti koi gi implementiraat
+	testovite. Poradi toa ona koe shto kje go iskoristime e mokjta na Spring za definiranje na razlichni profili i ona 
+	shto kje go iskoristime e sekogash testovite da se izvrshuvaat na prazna inMemoryDB koja shto DB kje ni obezbedi
+	sekogash da trgneme so prazna sostojba i pritoa nema nikako da vlijaeme na produkciskite podatoci t.e.
+	produkciskata DB. 
+Selenium - biblioteka koja shto nudi t.n. web driver preku koi nie bi imale mozhost da ja istestirame celosno aplikacijata koja shto ja 
+	izbrabotuvame t.e. da go simulirame chovekovoto odnesuvanje/navigiranje niz aplikacijata kako eden nachin za interakcija
+	so istata i pri toa klikanje da ostavime proverki dali odredeni uslovi se ispolneti. (Simulirame kako chovek da ja klika
+	aplikacijata [click, edit, add ...] i brzo se izvrshuvaat ovie testovi i ima zashteda na vreme vo proverka na soodvetnite
+	funkcionalnosti)
+
+
+==============================================================
+Jquery @ 1:22:50 $
+doc.getElById @ 1:37:25
+===========================
+
+
+
+https://cdn.discordapp.com/attachments/888399393986850846/1047194592900034690/4.png
+4) da vidam od kaj prof. Riste za ManyToMany mapiranje vo Postgres od auds i shto znachi toa so application properties codot?
+
+
+
+https://www.ted.com/talks/yuval_noah_harari_what_explains_the_rise_of_humans?subtitle=en
