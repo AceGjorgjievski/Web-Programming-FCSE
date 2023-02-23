@@ -1,2 +1,2 @@
-# Wrb-Programming-FCSE
+# Web-Programming-FCSE
 Laboratory Exercises
