@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Order</title>
+</head>
+<body>
+    <h2>
+     User order for: <th:block th:if="${session.user != null}" th:text="${session.user.getName() + session.user.getSurname()}"></th:block>
+    </h2>
+
+
+    <a th:href="@{'/cart'}">Back</a>
+</body>
+</html>

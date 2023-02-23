@@ -1,0 +1,127 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Balloon Order page - Welcome and choose a Balloon</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+        }
+    </style>
+
+    <script ></script>
+</head>
+<body>
+
+<main>
+
+
+    <!--    <ul>-->
+    <!--        <li th:each="balloon : ${balloons}">-->
+    <!--            <th:block th:text="${balloon.getName()}"></th:block>-->
+    <!--        </li>-->
+
+    <!--    </ul>-->
+
+    <!--    <div class="col mb-3">-->
+    <!--        <div class="row">-->
+    <!--            <div class="col-sm-12 col-md-12">-->
+    <!--                <a th:href="@{'/balloons/add'}" class="btn btn-clock ctn-dark">Add New Product</a>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!--    ================================================================================= -->
+    <div>
+        <div th:if="${balloons} == null">
+            <h2>Prazna lista !!!!</h2>
+        </div>
+
+
+        <div class="container mb-5">
+            <div class="row">
+                <div class="col-12" th:if="${balloons.size() > 0}">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col"> Balloon Name</th>
+                                <th scope="col"> Balloon Description</th>
+                                <th scope="col"> Balloon Manufacturer</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="b : ${balloons}" class="balloon">
+                                <td th:text="${b.getName()}"></td>
+                                <td th:text="${b.getDescription()}"></td>
+                                <td th:text="${b.getManufacturer() != null}
+                                ? ${b.getManufacturer().getName()}
+                                : 'No Manufacturer'"></td>
+                                <td class="text-right">
+                                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                        <form th:method="delete"
+                                              th:action="@{'/balloons/delete/{id}' (id=${b.getId()})}">
+                                            <button th:type="submit"
+                                                    class="btn btn-sm btn-danger delete-balloon">Delete</button>
+                                            <a class="btn btn-sm btn-danger edit-balloon"
+                                               th:href="@{'/balloons/edit-form/{id}' (id=${b.getId()})}">Edit</a>
+                                        </form>
+                                    </th:block>
+                                    <form th:method="POST" th:action="@{'/balloons/addToCart/{id}' (id=${b.getId()})}">
+                                        <button th:type="submit" class="cart-balloon">Add To Cart</button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col mb-3">
+                <div class="row">
+                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                        <div class="col-sm-12 col-md-12">
+                            <a th:href="@{'/balloons/add-form'}"
+                               class="btn btn-clock ctn-dark add-balloon-btn" >Add New Balloon</a>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+            <th:block sec:authorize="isAuthenticated()">
+                <a th:href="@{'/cart'}">My Cart</a>
+            </th:block>
+            <br/>
+        </div>
+    </div>
+    <!--    Ako postoi vo sesija znachi stavi mu logout, ako ne login-->
+<!--    <a th:href="@{'/logout'}">Logout</a>-->
+
+
+    <!--    ================================================================================= -->
+
+
+    <h2>Choose balloon color:</h2>
+    <form method="POST" th:action="@{/selectBalloon}">
+        <input type="radio" name="color" value="Red Balloon"> Red Balloon<br/>
+        <input type="radio" name="color" value="Green Balloon"> Green Balloon<br/>
+        <input type="radio" name="color" value="Yellow Balloon"> Yellow Balloon<br/>
+        <input type="radio" name="color" value="Blue Balloon"> Blue Balloon<br/>
+
+        <div>
+            <th:block th:if="${hasError}">
+                <div th:text="${errorMessage}"></div>
+            </th:block>
+        </div>
+
+        <input th:type="submit" th:value="Submit">
+    </form>
+    <br/>
+</main>
+
+
+</body>
+</html>

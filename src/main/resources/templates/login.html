@@ -1,0 +1,43 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Log in</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="header">-->
+<!--    <div class="header-right">-->
+
+<!--        &lt;!&ndash;        <a href="#home"><i class="fa fa-solid fa-house tm-brand-icon"></i></a>&ndash;&gt;-->
+<!--        &lt;!&ndash;        <a href="#contact"><i class="fa fa-solid fa-map-location-dot tm-brand-icon"></i></a>&ndash;&gt;-->
+<!--    </div>-->
+<!--</div>-->
+<div xmlns:th="http://www.thymeleaf.org">
+    <div class="center">
+        <h1>Log in</h1>
+        <form th:method="POST" th:action="@{'/login'}">
+            <div class="container">
+
+                <input type="text" placeholder="Username" name="username" >
+                <br/>
+
+                <input type="password" placeholder="Password" name="password" >
+
+<!--                <div th:if="${hasError}" class="error">-->
+<!--                    <div th:text="${error}"></div>-->
+<!--                </div>-->
+                <div th:text="${param.error}" style="color: red"></div>
+                <br/>
+                <button type="submit" name="submit">Login</button>
+
+            </div>
+            <!--        <span class="psw"><a href="#">Forgot password?</a></span>-->
+            <br>
+<!--            <span class="psw"><a href="/register" class="register">Register</a></span>-->
+
+        </form>
+
+    </div>
+</div>
+<!--</body>-->
+<!--</html>-->

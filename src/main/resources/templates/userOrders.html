@@ -1,0 +1,101 @@
+<!--<html xmlns="http://www.w3.org/1999/xhtml"-->
+<!--      xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="utf-8">-->
+<!--    <title>Balloon Order page - Welcome and choose a Balloon</title>-->
+<!--    <style type="text/css">-->
+<!--        body {-->
+<!--            width: 800px;-->
+<!--            margin: auto;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header>-->
+<!--    <h1>Welcome to our Balloon Shop App</h1>-->
+<!--</header>-->
+<!--<main>-->
+
+
+    <!--    <ul>-->
+    <!--        <li th:each="balloon : ${balloons}">-->
+    <!--            <th:block th:text="${balloon.getName()}"></th:block>-->
+    <!--        </li>-->
+
+    <!--    </ul>-->
+
+    <!--    <div class="col mb-3">-->
+    <!--        <div class="row">-->
+    <!--            <div class="col-sm-12 col-md-12">-->
+    <!--                <a th:href="@{'/balloons/add'}" class="btn btn-clock ctn-dark">Add New Product</a>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!--    ================================================================================= -->
+    <div xmlns:th="http://www.thymeleaf.org">
+        <h2>My Balloons</h2>
+        <div th:if="${hasError}">
+            <div th:text="${error}"></div>
+        </div>
+
+
+        <h2>
+            User cart for: <th:block th:if="${session.user != null}"
+                                     th:text="${#request.getRemoteUser()}"></th:block>
+        </h2>
+
+
+        <div class="container mb-5">
+            <div class="row">
+                <th:block th:if="${balloons.size() == 0}" th:text="'Empty cart'"></th:block>
+                <div class="col-12" th:if="${balloons.size() > 0}">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col"> Balloon Name</th>
+                                <th scope="col"> Balloon Description</th>
+                                <th scope="col"> Balloon Manufacturer</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="b : ${balloons}" class="cart-item">
+                                <td th:text="${b.getName()}"></td>
+                                <td th:text="${b.getDescription()}"></td>
+                                <td th:text="${b.getManufacturer() != null}
+                                ? ${b.getManufacturer().getName()}
+                                : 'No Manufacturer'" ></td>
+                                <td class="text-right">
+                                    <form th:method="delete" th:action="@{'/cart/delete/{id}' (id=${b.getId()})}">
+                                        <button th:type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                    </form>
+
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div th:if="${balloons.size() > 0}">
+                <form th:method="POST" th:action="@{'/order/checkout'}">
+                    <input type="datetime-local" name="localDateTime">
+                    <button th:type="submit">Create Order</button>
+                </form>
+            </div>
+            <a th:href="@{'/balloons'}">Back</a>
+
+
+        </div>
+    </div>
+
+
+
+<!--</main>-->
+<!--</body>-->
+<!--</html>-->

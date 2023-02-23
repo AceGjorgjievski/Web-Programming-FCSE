@@ -1,0 +1,24 @@
+<header xmlns:th="http://www.thymeleaf.org">
+    <h1>Welcome to our Balloon Shop App</h1>
+    <th:block th:if="${#request.getRemoteUser() != null}"
+              th:text="'User: '+ ${#request.getRemoteUser()}"/>
+    </br>
+
+    <!--    <th:block sec:authorize="hasRole('ROLE_ADMIN')">-->
+    <!--        <div class="col-sm-12 col-md-12">-->
+    <!--            <a th:href="@{'/balloons/add-form'}" class="btn btn-clock ctn-dark">Add New Balloon</a>-->
+    <!--        </div>-->
+    <!--    </th:block>-->
+
+
+    <th:block sec:authorize="isAuthenticated()">
+        <a th:href="@{'/logout'}">Logout</a>
+    </th:block>
+    <a href="/balloons">Balloons</a>
+    <th:block th:if="${#request.getRemoteUser() == null}">
+        <a href="/login">Log in</a>
+        <a href="/register">Register</a>
+    </th:block>
+
+    <br>
+</header>
