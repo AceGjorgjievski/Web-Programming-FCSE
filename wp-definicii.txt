@@ -9,7 +9,7 @@ REPOSITORY => kje bidat nekoi so pomoshni metodi koi shto kje mozheme nekako da 
 
 Optional<Class> =>  obezbeduva da nie ne vrakjame null object tuku vrakjame Optional object koj vnatre mozhe da bide prazen
 
-Ctrl+Shift+F9
+Ctrl+Shift+F9 -> re-build current .html if and only if small changes have been made.
 
 init() => se povikuva koga statuvame spring, od koga kje se instacira category servletot
 
